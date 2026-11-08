@@ -13,3 +13,8 @@ def load_config(api_key: str, base_url: str = "", model_name: str = "") -> Model
         api_key=api_key,
         model_name=model_name or ModelConfig.model_name,
     )
+
+#
+OPENAI_API_KEY = os.getenv("JD_API_KEY", "  ") # 优先从系统环境变量读取
+OPENAI_BASE_URL = "https://modelservice.jdcloud.com/v1"
+MODEL_NAME = "DeepSeek-V4-Flash-0731"
