@@ -69,3 +69,19 @@ if "result" in st.session_state:
         st.markdown(f'<div class="trace-box">{t}</div>', unsafe_allow_html=True)
 else:
     st.caption("在左侧选择目标市场后点击“启动智能体分析”。可视化驾驶舱将同步呈现市场机会与合规风险。")
+
+
+# 兼容“本地/云端”
+import streamlit as st
+import os
+
+def get_config(key, default=""):
+    # 优先级：Streamlit Secrets > 本地环境变量 > 默认值
+    return st.secrets.get(key, os.environ.get(key, default))
+
+api_key = get_config("OPENAI_API_KEY")
+base_url = get_config("OPENAI_BASE_URL", "https://modelservice.jdcloud.com/v1")
+model_name = get_config("MODEL_NAME", "DeepSeek-V4-Flash-0731")
+
+# 侧边栏依然保留手动输入作为降级方案
+st.sidebar.text_input("API Key", value=api_key, type="password")
